@@ -14,5 +14,11 @@ agent  any
          """
        }
      }
-  }
+     stage('Test"){
+       steps{
+	  sh """
+	     mvn test
+	  """
+      }
+    }
 }
