@@ -1,12 +1,15 @@
-node {
-   def mvnHome
-   stage('Preparation') { // for display purposes
+pipeline {
+agent any
+tool {
+ jdk 'jdk'
+ maven 'mvn'
+ }
+   stage('Checkout') { // for display purposes
       // Get some code from a GitHub repository
-      git 'https://github.com/scmgalaxy/helloworld-java-maven'
+      checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-tga2', url: 'https://github.com/sriram-naresh/build-test-deploy-project.git']]])
       // Get the Maven tool.
       // ** NOTE: This 'M3' Maven tool must be configured
       // **       in the global configuration.           
-      mvnHome = tool 'maven'
    }
    stage('Build') {
       // Run the maven build
