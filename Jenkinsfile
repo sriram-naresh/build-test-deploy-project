@@ -1,9 +1,10 @@
 pipeline {
-agent any
-tool {
- jdk 'jdk'
- maven 'mvn'
+ agent any
+ tools{
+   jdk 'jdk'
+   maven 'mvn'
  }
+ stages{
    stage('Checkout') { // for display purposes
       // Get some code from a GitHub repository
       checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-tga2', url: 'https://github.com/sriram-naresh/build-test-deploy-project.git']]])
@@ -39,4 +40,5 @@ tool {
       junit '**/target/surefire-reports/TEST-*.xml'
       archive 'target/*.jar'
    }
+ }
 }
